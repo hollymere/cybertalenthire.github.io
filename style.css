@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -9,9 +10,18 @@ header, section, footer {
   padding: 20px;
   text-align: center;
 }
+.logo {
+  max-width: 120px;
+  margin-bottom: 10px;
+}
 h1 {
   font-size: 2.5em;
   color: #00fff7;
+}
+h3 {
+  font-size: 1.4em;
+  color: #00fff7;
+  margin-bottom: 10px;
 }
 .cta-button {
   display: inline-block;
@@ -29,4 +39,27 @@ ul {
 }
 li {
   margin: 10px 0;
+}
+.testimonials {
+  margin: 40px auto;
+  max-width: 900px;
+}
+.testimonial-row {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.testimonial {
+  flex: 1;
+  min-width: 250px;
+  background: #1a2733;
+  padding: 15px;
+  border-radius: 5px;
+  font-style: italic;
+  color: #aef9f7;
+}
+footer {
+  font-size: 0.85em;
+  color: #aaaaaa;
 }
