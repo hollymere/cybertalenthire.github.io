@@ -1,1 +1,65 @@
-/* Final style.css with footer and layout improvements */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0c111a;
+    color: #fff;
+    text-align: center;
+}
+header .logo {
+    max-width: 160px;
+    margin: 30px auto 10px;
+    display: block;
+}
+h1 {
+    color: #27f4de;
+    font-size: 2.5rem;
+    margin: 10px 0;
+}
+.tagline {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1rem;
+}
+.value-prop {
+    margin: 30px auto;
+    font-size: 1.1rem;
+    font-weight: bold;
+    width: 80%;
+    max-width: 700px;
+}
+.cta-button {
+    background-color: #1ae3d2;
+    color: #000;
+    padding: 12px 25px;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+}
+section.specialties, section.testimonials {
+    margin: 40px auto;
+}
+.specialties h2, .testimonials h2 {
+    color: #27f4de;
+}
+.specialties ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 400px;
+}
+.specialties li {
+    margin: 5px 0;
+}
+.testimonials blockquote {
+    font-style: italic;
+    color: #c0e9e6;
+    margin: 15px auto;
+    max-width: 600px;
+}
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #121926;
+    font-size: 0.9rem;
+}
