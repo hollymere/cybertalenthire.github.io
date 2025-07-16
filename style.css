@@ -1,65 +1,72 @@
 
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  background: #0f1722;
+  background-color: #0f172a;
   color: #ffffff;
-  line-height: 1.6;
-}
-header, section, footer {
-  padding: 20px;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
+header {
+  padding: 20px 10px;
+}
 .logo {
-  max-width: 120px;
+  width: 100px;
   margin-bottom: 10px;
 }
 h1 {
+  color: #00ffff;
   font-size: 2.5em;
-  color: #00fff7;
+  margin: 0;
 }
-h3 {
-  font-size: 1.4em;
-  color: #00fff7;
-  margin-bottom: 10px;
+.tagline {
+  font-size: 1em;
+  margin-top: 5px;
+  color: #ccc;
+}
+.intro h2 {
+  margin: 40px 20px;
+  font-size: 1.25em;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .cta-button {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #00fff7;
-  color: #0f1722;
+  background-color: #00ffff;
+  color: #000;
+  padding: 12px 25px;
   text-decoration: none;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 4px;
 }
-ul {
+.testimonials {
+  padding: 40px 10px;
+}
+.testimonial {
+  background-color: #1e293b;
+  margin: 10px auto;
+  max-width: 600px;
+  padding: 15px;
+  border-radius: 8px;
+  font-style: italic;
+}
+.specialties {
+  padding: 30px 10px;
+}
+.specialties ul {
   list-style: none;
   padding: 0;
 }
-li {
-  margin: 10px 0;
-}
-.testimonials {
-  margin: 40px auto;
-  max-width: 900px;
-}
-.testimonial-row {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.testimonial {
-  flex: 1;
-  min-width: 250px;
-  background: #1a2733;
-  padding: 15px;
-  border-radius: 5px;
-  font-style: italic;
-  color: #aef9f7;
+.specialties li {
+  margin: 8px 0;
 }
 footer {
-  font-size: 0.85em;
-  color: #aaaaaa;
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 0.9em;
+  background-color: #0f172a;
+}
+.social-icon {
+  width: 24px;
+  margin-top: 10px;
 }
