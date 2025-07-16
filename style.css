@@ -1,88 +1,65 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #0f172a;
-    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0c111a;
+    color: #fff;
     text-align: center;
 }
-
-header {
-    padding: 30px 20px 10px;
-}
-
-.logo {
+header .logo {
     max-width: 160px;
-    margin-bottom: 20px;
+    margin: 30px auto 10px;
+    display: block;
 }
-
 h1 {
-    color: #22d3ee;
+    color: #27f4de;
     font-size: 2.5rem;
     margin: 10px 0;
 }
-
-.subheading {
+.tagline {
+    margin: 0;
+    font-weight: 300;
     font-size: 1rem;
-    color: #cccccc;
 }
-
-.hero .tagline {
+.value-prop {
+    margin: 30px auto;
     font-size: 1.1rem;
     font-weight: bold;
-    margin: 20px auto;
-    max-width: 800px;
+    width: 80%;
+    max-width: 700px;
 }
-
 .cta-button {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #22d3ee;
+    background-color: #1ae3d2;
     color: #000;
-    text-decoration: none;
+    padding: 12px 25px;
     font-weight: bold;
     border-radius: 6px;
-    margin: 20px 0;
+    text-decoration: none;
 }
-
-.specialties {
-    padding: 40px 20px 10px;
+section.specialties, section.testimonials {
+    margin: 40px auto;
 }
-
-.specialties h2 {
-    color: #22d3ee;
-    margin-bottom: 10px;
+.specialties h2, .testimonials h2 {
+    color: #27f4de;
 }
-
 .specialties ul {
     list-style: none;
     padding: 0;
+    margin: 0 auto;
+    max-width: 400px;
 }
-
 .specialties li {
-    margin: 6px 0;
+    margin: 5px 0;
 }
-
-.testimonials {
-    background-color: #1e293b;
-    padding: 30px 20px;
-}
-
-.testimonials h2 {
-    color: #22d3ee;
-    margin-bottom: 20px;
-}
-
-.testimonial {
-    margin: 10px auto;
-    max-width: 600px;
+.testimonials blockquote {
     font-style: italic;
-    color: #cbd5e1;
+    color: #c0e9e6;
+    margin: 15px auto;
+    max-width: 600px;
 }
-
 footer {
-    background-color: #0f172a;
+    margin-top: 40px;
     padding: 20px;
+    background-color: #121926;
     font-size: 0.9rem;
-    color: #94a3b8;
 }
