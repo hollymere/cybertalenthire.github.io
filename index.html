@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberTalentHire — Elite Cybersecurity Recruitment</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #00E5C8;
+  --teal-dark: #00B8A0;
+  --teal-glow: rgba(0,229,200,0.15);
+  --teal-faint: rgba(0,229,200,0.06);
+  --navy: #0A1628;
+  --navy-mid: #0D1F3C;
+  --navy-light: #142242;
+  --navy-card: #111E35;
+  --white: #FFFFFF;
+  --off-white: #E8F0F8;
+  --mid: #7A90B0;
+  --soft: #4A6080;
+  --border: rgba(0,229,200,0.12);
+  --border-soft: rgba(255,255,255,0.06);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--navy);
+  color:var(--off-white);
+  font-family:'Space Grotesk',sans-serif;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* CUSTOM CURSOR */
+*, *:hover { cursor:default; }
+a, button { cursor:pointer !important; }
+
+/* SCANLINE TEXTURE */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+}
+
+/* ========== TOPBAR ========== */
+.topbar {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(10,22,40,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 60px;
+  height:68px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.topbar::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:1px; background:linear-gradient(90deg,transparent,var(--teal),transparent);
+  opacity:0.4;
+}
+
+.logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.logo-icon {
+  width:38px; height:38px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.logo-text {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:1.15rem; letter-spacing:0.04em; color:white;
+}
+.logo-text span { color:var(--teal); }
+
+.nav-links { display:flex; align-items:center; gap:6px; list-style:none; }
+.nav-links a {
+  padding:7px 16px; font-size:0.83rem; font-weight:500;
+  color:var(--mid); text-decoration:none;
+  border-radius:4px; transition:all .2s; letter-spacing:0.02em;
+}
+.nav-links a:hover { color:var(--teal); background:var(--teal-faint); }
+
+.nav-cta {
+  background:var(--teal); color:var(--navy) !important;
+  font-weight:700 !important; padding:9px 22px !important;
+  border-radius:4px !important; letter-spacing:0.04em !important;
+  transition:all .2s !important;
+}
+.nav-cta:hover { background:white !important; transform:translateY(-1px); box-shadow:0 4px 20px rgba(0,229,200,0.3) !important; }
+
+/* ========== HERO ========== */
+.hero {
+  min-height:100vh;
+  display:flex; align-items:center;
+  position:relative; overflow:hidden;
+  padding:120px 60px 80px;
+}
+
+/* Animated grid background */
+.hero-grid {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,229,200,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,200,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridShift 20s linear infinite;
+}
+@keyframes gridShift { 0%{transform:translate(0,0)} 100%{transform:translate(60px,60px)} }
+
+/* Radial glow */
+.hero-glow {
+  position:absolute; top:-200px; right:-200px;
+  width:700px; height:700px;
+  background:radial-gradient(circle,rgba(0,229,200,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-glow-2 {
+  position:absolute; bottom:-100px; left:-100px;
+  width:500px; height:500px;
+  background:radial-gradient(circle,rgba(0,100,200,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Floating threat indicator */
+.threat-indicator {
+  position:absolute; top:100px; right:60px;
+  background:rgba(255,60,60,0.08); border:1px solid rgba(255,60,60,0.25);
+  padding:12px 20px; display:flex; align-items:center; gap:10px;
+  animation:threatPulse 3s ease-in-out infinite;
+}
+@keyframes threatPulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+.threat-dot { width:8px; height:8px; background:#FF4040; border-radius:50%; animation:dotPulse 1.5s infinite; }
+@keyframes dotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,64,64,.4)} 70%{box-shadow:0 0 0 8px rgba(255,64,64,0)} }
+.threat-text { font-size:0.72rem; font-weight:600; color:rgba(255,150,150,0.9); letter-spacing:0.1em; text-transform:uppercase; }
+
+.hero-inner {
+  max-width:1300px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 420px; gap:80px;
+  align-items:center; width:100%; position:relative; z-index:2;
+}
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid var(--border);
+  background:var(--teal-faint);
+  color:var(--teal); font-size:0.7rem; font-weight:600;
+  letter-spacing:0.18em; text-transform:uppercase;
+  padding:7px 16px; margin-bottom:24px;
+}
+.hero-tag::before { content:''; width:6px; height:6px; background:var(--teal); border-radius:50%; animation:dot 2s infinite; }
+@keyframes dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(1.8)} }
+
+.hero h1 {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(2.8rem,4.5vw,4.8rem);
+  line-height:1.0; color:white;
+  margin-bottom:24px; letter-spacing:-0.02em;
+}
+.hero h1 .accent { color:var(--teal); display:block; }
+.hero h1 .dim { color:var(--off-white); opacity:0.7; }
+
+.hero-sub {
+  font-size:1.05rem; color:var(--mid);
+  line-height:1.78; margin-bottom:40px;
+  font-weight:400; max-width:540px;
+}
+.hero-sub strong { color:var(--off-white); font-weight:600; }
+
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px; }
+.btn-primary {
+  background:var(--teal); color:var(--navy);
+  padding:14px 32px; font-weight:700; font-size:0.9rem;
+  letter-spacing:0.06em; text-transform:uppercase;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  transition:all .25s; border:2px solid var(--teal);
+}
+.btn-primary:hover { background:white; border-color:white; transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,229,200,0.25); }
+.btn-secondary {
+  background:transparent; color:var(--teal);
+  padding:14px 32px; font-weight:600; font-size:0.9rem;
+  letter-spacing:0.06em; text-transform:uppercase;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  transition:all .25s; border:1px solid var(--border);
+}
+.btn-secondary:hover { border-color:var(--teal); background:var(--teal-faint); }
+
+/* HERO STATS */
+.hero-stats {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:0; border-top:1px solid var(--border-soft); padding-top:36px;
+}
+.hstat { padding:0 24px; border-right:1px solid var(--border-soft); }
+.hstat:first-child { padding-left:0; }
+.hstat:last-child { border-right:none; }
+.hstat-num {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:2.4rem; color:var(--teal); line-height:1; display:inline;
+}
+.hstat-unit { font-family:'Syne',sans-serif; font-weight:700; font-size:1.2rem; color:var(--teal); }
+.hstat-lbl { font-size:0.7rem; color:var(--soft); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
+
+/* HERO RIGHT PANEL */
+.hero-panel {
+  background:var(--navy-card);
+  border:1px solid var(--border);
+  padding:32px; position:relative; overflow:hidden;
+}
+.hero-panel::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--teal),transparent);
+}
+.panel-label { font-size:0.62rem; color:var(--teal); letter-spacing:0.2em; text-transform:uppercase; font-weight:600; margin-bottom:16px; }
+.panel-title { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:white; margin-bottom:20px; line-height:1.3; }
+
+.role-list { list-style:none; margin-bottom:24px; }
+.role-item {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:11px 0; border-bottom:1px solid var(--border-soft);
+  transition:padding-left .2s;
+}
+.role-item:last-child { border-bottom:none; }
+.role-item:hover { padding-left:6px; }
+.role-name { font-size:0.84rem; font-weight:500; color:var(--off-white); display:flex; align-items:center; gap:10px; }
+.role-name::before { content:''; width:5px; height:5px; background:var(--teal); border-radius:50%; flex-shrink:0; }
+.role-demand {
+  font-size:0.65rem; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; padding:3px 10px;
+  background:rgba(0,229,200,0.08); border:1px solid rgba(0,229,200,0.2);
+  color:var(--teal);
+}
+.role-demand.critical { background:rgba(255,60,60,0.08); border-color:rgba(255,60,60,0.2); color:#FF8080; }
+
+.panel-cta {
+  display:block; background:var(--teal); color:var(--navy);
+  text-align:center; font-weight:700; font-size:0.85rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:13px; text-decoration:none; transition:all .2s;
+}
+.panel-cta:hover { background:white; }
+
+/* ========== URGENCY BANNER ========== */
+.urgency-banner {
+  background:linear-gradient(90deg,rgba(255,60,60,0.08),rgba(255,60,60,0.04),rgba(255,60,60,0.08));
+  border-top:1px solid rgba(255,60,60,0.15);
+  border-bottom:1px solid rgba(255,60,60,0.15);
+  padding:16px 60px; overflow:hidden; position:relative;
+}
+.urgency-inner {
+  max-width:1300px; margin:0 auto;
+  display:flex; align-items:center; gap:24px;
+}
+.urgency-dot { width:8px; height:8px; background:#FF4040; border-radius:50%; flex-shrink:0; animation:dotPulse 1.5s infinite; }
+.urgency-text { font-size:0.8rem; font-weight:600; color:rgba(255,160,160,0.9); letter-spacing:0.04em; }
+.urgency-text strong { color:#FF8080; }
+
+/* ========== SECTION UTILITY ========== */
+.section { padding:100px 60px; position:relative; }
+.wrap { max-width:1300px; margin:0 auto; }
+
+.eyebrow {
+  display:flex; align-items:center; gap:12px;
+  font-size:0.66rem; color:var(--teal); letter-spacing:0.22em;
+  text-transform:uppercase; font-weight:700; margin-bottom:12px;
+}
+.eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
+
+h2.st {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(1.9rem,3vw,3rem); line-height:1.05;
+  color:white; margin-bottom:14px; letter-spacing:-0.01em;
+}
+h2.st em { font-style:normal; color:var(--teal); }
+
+.intro { font-size:1rem; color:var(--mid); line-height:1.78; font-weight:400; max-width:560px; margin-bottom:56px; }
+
+/* ========== WHY NOW ========== */
+.why-now { background:var(--navy-mid); }
+.why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); }
+.why-card {
+  background:var(--navy-card); padding:40px 36px;
+  position:relative; overflow:hidden; transition:background .25s;
+}
+.why-card:hover { background:var(--navy-light); }
+.why-card::after {
+  content:''; position:absolute; bottom:0; left:0; width:0; height:2px;
+  background:var(--teal); transition:width .4s;
+}
+.why-card:hover::after { width:100%; }
+.why-num {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:3.5rem; color:rgba(0,229,200,0.08); line-height:1;
+  margin-bottom:16px;
+}
+.why-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; color:white; margin-bottom:10px; }
+.why-desc { font-size:0.84rem; color:var(--mid); line-height:1.7; }
+.why-stat { margin-top:16px; font-size:1.4rem; font-weight:700; color:var(--teal); font-family:'Syne',sans-serif; }
+.why-stat small { font-size:0.7rem; color:var(--soft); font-weight:500; display:block; margin-top:2px; font-family:'Space Grotesk',sans-serif; }
+
+/* ========== SPECIALISMS ========== */
+.spec-section { background:var(--navy); }
+.spec-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.spec-card {
+  background:var(--navy-card); border:1px solid var(--border-soft);
+  padding:32px; display:flex; gap:20px; align-items:flex-start;
+  transition:all .25s; text-decoration:none;
+}
+.spec-card:hover { border-color:var(--border); background:var(--navy-light); transform:translateY(-2px); }
+.spec-icon {
+  width:48px; height:48px; flex-shrink:0;
+  background:var(--teal-faint); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+}
+.spec-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; color:white; margin-bottom:6px; }
+.spec-desc { font-size:0.82rem; color:var(--mid); line-height:1.65; margin-bottom:10px; }
+.spec-certs { display:flex; gap:6px; flex-wrap:wrap; }
+.cert-tag {
+  font-size:0.62rem; font-weight:700; letter-spacing:0.08em;
+  padding:3px 9px; background:rgba(0,229,200,0.06);
+  border:1px solid rgba(0,229,200,0.15); color:var(--teal);
+}
+.spec-salary { font-size:0.78rem; font-weight:600; color:var(--teal); margin-top:8px; }
+
+/* ========== PROCESS ========== */
+.process-section { background:var(--navy-mid); }
+.process-track {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0; position:relative; margin-top:56px;
+}
+.process-track::before {
+  content:''; position:absolute; top:32px; left:6%; right:6%; height:1px;
+  background:linear-gradient(90deg,var(--teal),rgba(0,229,200,0.1));
+}
+.pstep { text-align:center; padding:0 16px; position:relative; }
+.pdot {
+  width:64px; height:64px; margin:0 auto 20px;
+  background:var(--navy-card); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; color:var(--teal);
+  position:relative; z-index:2; transition:all .3s;
+}
+.pstep:hover .pdot { background:var(--teal); color:var(--navy); border-color:var(--teal); box-shadow:0 0 30px rgba(0,229,200,0.3); }
+.pstep h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; color:white; margin-bottom:8px; }
+.pstep p { font-size:0.78rem; color:var(--mid); line-height:1.6; }
+.ptag { display:inline-block; margin-top:10px; font-size:0.62rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:4px 12px; background:var(--teal-faint); border:1px solid var(--border); color:var(--teal); }
+
+/* ========== CLIENTS ========== */
+.clients-section { background:var(--navy); padding:60px; }
+.clients-label { font-size:0.65rem; color:var(--soft); letter-spacing:0.2em; text-transform:uppercase; font-weight:600; text-align:center; margin-bottom:28px; }
+.clients-row {
+  max-width:1300px; margin:0 auto;
+  display:flex; gap:0; border:1px solid var(--border-soft);
+}
+.client-box {
+  flex:1; padding:20px; text-align:center; border-right:1px solid var(--border-soft);
+  font-family:'Syne',sans-serif; font-weight:800; font-size:1rem;
+  color:rgba(255,255,255,0.2); letter-spacing:0.08em; text-transform:uppercase;
+  transition:color .2s;
+}
+.client-box:last-child { border-right:none; }
+.client-box:hover { color:rgba(255,255,255,0.5); }
+
+/* ========== CONTACT ========== */
+.contact-section { background:var(--navy-mid); padding:100px 60px; }
+.contact-inner {
+  max-width:1300px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;
+}
+.contact-form { display:flex; flex-direction:column; gap:14px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-label { font-size:0.72rem; font-weight:600; color:var(--mid); letter-spacing:0.1em; text-transform:uppercase; }
+.form-input, .form-select, .form-textarea {
+  background:var(--navy-card); border:1px solid var(--border-soft);
+  color:white; padding:12px 16px; font-family:'Space Grotesk',sans-serif;
+  font-size:0.88rem; outline:none; transition:border-color .2s; width:100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--teal); }
+.form-select { appearance:none; }
+.form-textarea { min-height:120px; resize:vertical; }
+.form-submit {
+  background:var(--teal); color:var(--navy); border:none;
+  padding:15px 32px; font-family:'Space Grotesk',sans-serif;
+  font-weight:700; font-size:0.9rem; letter-spacing:0.08em;
+  text-transform:uppercase; cursor:pointer; transition:all .2s; align-self:flex-start;
+}
+.form-submit:hover { background:white; transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,229,200,0.2); }
+
+.contact-info h3 { font-family:'Syne',sans-serif; font-weight:800; font-size:1.8rem; color:white; line-height:1.2; margin-bottom:14px; }
+.contact-info h3 em { font-style:normal; color:var(--teal); }
+.contact-info p { font-size:0.9rem; color:var(--mid); line-height:1.75; margin-bottom:32px; }
+
+.contact-points { list-style:none; display:flex; flex-direction:column; gap:0; }
+.cp {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 0; border-bottom:1px solid var(--border-soft);
+}
+.cp:last-child { border-bottom:none; }
+.cp-icon { color:var(--teal); font-size:1rem; margin-top:2px; flex-shrink:0; }
+.cp-title { font-size:0.82rem; font-weight:700; color:white; margin-bottom:3px; }
+.cp-desc { font-size:0.78rem; color:var(--mid); line-height:1.5; }
+
+.clearance-box {
+  margin-top:28px; padding:20px 24px;
+  background:var(--navy-card); border:1px solid var(--border);
+  border-left:3px solid var(--teal);
+}
+.clearance-box h4 { font-size:0.82rem; font-weight:700; color:var(--teal); margin-bottom:6px; letter-spacing:0.06em; text-transform:uppercase; }
+.clearance-box p { font-size:0.78rem; color:var(--mid); line-height:1.6; }
+
+/* ========== FOOTER ========== */
+footer {
+  background:var(--navy); padding:36px 60px;
+  border-top:1px solid var(--border-soft);
+}
+.footer-inner {
+  max-width:1300px; margin:0 auto;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+}
+.footer-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.footer-logo-text { font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; color:rgba(255,255,255,0.5); }
+.footer-logo-text span { color:var(--teal); }
+.footer-copy { font-size:0.75rem; color:var(--soft); }
+.footer-links { display:flex; gap:20px; list-style:none; }
+.footer-links a { font-size:0.75rem; color:var(--soft); text-decoration:none; transition:color .2s; }
+.footer-links a:hover { color:var(--teal); }
+
+/* ========== ANIMATIONS ========== */
+.fu { opacity:0; transform:translateY(20px); transition:opacity .6s ease,transform .6s ease; }
+.fu.on { opacity:1; transform:translateY(0); }
+.fu:nth-child(2){transition-delay:.08s}
+.fu:nth-child(3){transition-delay:.16s}
+.fu:nth-child(4){transition-delay:.24s}
+.fu:nth-child(5){transition-delay:.32s}
+.fu:nth-child(6){transition-delay:.40s}
+
+/* Glow on scroll */
+@keyframes glowPulse { 0%,100%{opacity:.06} 50%{opacity:.12} }
+.hero-glow { animation:glowPulse 6s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="topbar">
+  <a href="#" class="logo">
+    <div class="logo-icon"><svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00E5C8"/>
+      <stop offset="100%" stop-color="#00B8A0"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield shape -->
+  <path d="M19 2L4 8V20C4 28.5 10.5 34.5 19 37C27.5 34.5 34 28.5 34 20V8L19 2Z" fill="url(#shieldGrad)" opacity="0.15"/>
+  <path d="M19 2L4 8V20C4 28.5 10.5 34.5 19 37C27.5 34.5 34 28.5 34 20V8L19 2Z" stroke="url(#shieldGrad)" stroke-width="1.5" fill="none"/>
+  <!-- Inner shield -->
+  <path d="M19 7L9 11.5V19.5C9 25 13.5 29.5 19 31.5C24.5 29.5 29 25 29 19.5V11.5L19 7Z" fill="url(#shieldGrad)" opacity="0.12"/>
+  <!-- Lock body -->
+  <rect x="14" y="19" width="10" height="8" rx="1" fill="url(#shieldGrad)" opacity="0.9"/>
+  <!-- Lock shackle -->
+  <path d="M16 19V16.5C16 14.6 17.1 13 19 13C20.9 13 22 14.6 22 16.5V19" stroke="#00E5C8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Keyhole dot -->
+  <circle cx="19" cy="23" r="1.5" fill="#0A1628"/>
+</svg></div>
+    <div class="logo-text">Cyber<span>Talent</span>Hire</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why-now">Why Now</a></li>
+    <li><a href="#specialisms">Specialisms</a></li>
+    <li><a href="#process">Our Process</a></li>
+    <li><a href="#contact">Hire Talent</a></li>
+    <li><a href="#contact">Find a Role</a></li>
+    <li><a href="tel:+17031234567" style="color:var(--teal);font-size:0.8rem;font-weight:600;padding:7px 12px;">📞 (703) 123-4567</a></li>
+    <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+  </ul>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="threat-indicator">
+    <div class="threat-dot"></div>
+    <div class="threat-text">Elevated Threat Level — US Federal Sector</div>
+  </div>
+
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Elite Cybersecurity Recruitment — Northern Virginia &amp; US Federal</div>
+      <h1>
+        The Right People.<br>
+        <span class="accent">In the Right Role.</span>
+        <span class="dim">When It Matters Most.</span>
+      </h1>
+      <p class="hero-sub">
+        CyberTalentHire places elite cybersecurity professionals with the organisations that protect critical infrastructure, federal systems and enterprise networks. <strong>Boutique. Specialist. Fast.</strong> UK-based, US-focused — operating across time zones so your search never stops.
+      </p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Hire Talent Now →</a>
+        <a href="#specialisms" class="btn-secondary">Our Specialisms</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat">
+          <span class="hstat-num">53</span><span class="hstat-unit">k+</span>
+          <div class="hstat-lbl">Open roles — Virginia alone</div>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num">25</span><span class="hstat-unit">%</span>
+          <div class="hstat-lbl">Of US cyber roles unfilled</div>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num">48</span><span class="hstat-unit">hr</span>
+          <div class="hstat-lbl">Avg. first shortlist</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="hero-panel">
+        <div class="panel-label">Current Demand — Northern Virginia</div>
+        <div class="panel-title">Roles we're actively placing right now</div>
+        <ul class="role-list">
+          <li class="role-item">
+            <div class="role-name">Cloud Security Engineer</div>
+            <div class="role-demand critical">Critical</div>
+          </li>
+          <li class="role-item">
+            <div class="role-name">SOC Analyst (Tier 2/3)</div>
+            <div class="role-demand critical">Critical</div>
+          </li>
+          <li class="role-item">
+            <div class="role-name">Penetration Tester</div>
+            <div class="role-demand">High</div>
+          </li>
+          <li class="role-item">
+            <div class="role-name">GRC / Compliance Analyst</div>
+            <div class="role-demand">High</div>
+          </li>
+          <li class="role-item">
+            <div class="role-name">Security Architect</div>
+            <div class="role-demand">High</div>
+          </li>
+          <li class="role-item">
+            <div class="role-name">DevSecOps Engineer</div>
+            <div class="role-demand">Active</div>
+          </li>
+        </ul>
+        <a href="#contact" class="panel-cta">Submit a Vacancy →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-banner">
+  <div class="urgency-inner">
+    <div class="urgency-dot"></div>
+    <div class="urgency-text">
+      <strong>March 2025 —</strong> Elevated US-Iran cyber threat posture. Federal contractors accelerating security hires. CISA operating at reduced capacity. <strong>Demand for cleared cybersecurity professionals at record levels.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- WHY NOW -->
+<div class="why-now section" id="why-now">
+  <div class="wrap">
+    <div class="eyebrow">Market Intelligence</div>
+    <h2 class="st">Why the Demand Has <em>Never Been Higher</em></h2>
+    <p class="intro">Three converging forces are creating the most acute cybersecurity talent shortage in history — and the organisations that hire fastest will be the ones best protected.</p>
+    <div class="why-grid">
+      <div class="why-card fu">
+        <div class="why-num">01</div>
+        <div class="why-title">Structural Talent Shortage</div>
+        <div class="why-desc">The US cybersecurity workforce gap has grown every year for a decade. Demand consistently outpaces supply — particularly for cleared professionals in the federal corridor.</div>
+        <div class="why-stat">53,855 <small>Open roles in Virginia right now</small></div>
+      </div>
+      <div class="why-card fu">
+        <div class="why-num">02</div>
+        <div class="why-title">Elevated Threat Environment</div>
+        <div class="why-desc">Nation-state actors — Iran, China, Russia — are actively targeting US critical infrastructure and federal contractors. Boards are demanding accelerated hiring immediately.</div>
+        <div class="why-stat">+40% <small>Increase in GRC roles driven by SEC mandates</small></div>
+      </div>
+      <div class="why-card fu">
+        <div class="why-num">03</div>
+        <div class="why-title">Reduced Government Capacity</div>
+        <div class="why-desc">CISA operating at significantly reduced staffing levels. Private sector and federal contractors under pressure to self-sufficiently strengthen security posture.</div>
+        <div class="why-stat">68,214 <small>Vacancies in DC metro area alone</small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECIALISMS -->
+<div class="spec-section section" id="specialisms">
+  <div class="wrap">
+    <div class="eyebrow">What We Place</div>
+    <h2 class="st">Deep Expertise Across <em>Every Discipline</em></h2>
+    <p class="intro">We don't place across all of IT. We place exclusively in cybersecurity — which means our candidate networks, our assessment rigour and our market knowledge are unmatched in this niche.</p>
+    <div class="spec-grid">
+      <div class="spec-card fu">
+        <div class="spec-icon">🔍</div>
+        <div>
+          <div class="spec-title">SOC Analysts &amp; Incident Responders</div>
+          <div class="spec-desc">Tier 1 through Tier 3 SOC analysts, incident responders and threat hunters. The frontline of any security operation — and the hardest roles to fill at speed.</div>
+          <div class="spec-certs">
+            <div class="cert-tag">Security+</div>
+            <div class="cert-tag">CySA+</div>
+            <div class="cert-tag">GCIH</div>
+            <div class="cert-tag">GCIA</div>
+          </div>
+          <div class="spec-salary">$80,000 — $130,000</div>
+        </div>
+      </div>
+      <div class="spec-card fu">
+        <div class="spec-icon">🏗️</div>
+        <div>
+          <div class="spec-title">Security Engineers &amp; Architects</div>
+          <div class="spec-desc">Engineers who build and maintain security infrastructure, and architects who design it from the ground up. Senior, experienced, and extremely scarce.</div>
+          <div class="spec-certs">
+            <div class="cert-tag">CISSP</div>
+            <div class="cert-tag">CCSP</div>
+            <div class="cert-tag">SABSA</div>
+          </div>
+          <div class="spec-salary">$140,000 — $200,000</div>
+        </div>
+      </div>
+      <div class="spec-card fu">
+        <div class="spec-icon">⚡</div>
+        <div>
+          <div class="spec-title">Penetration Testers &amp; Red Team</div>
+          <div class="spec-desc">Ethical hackers, red team operators and vulnerability researchers. The most technical roles in the market — and the ones commanding the highest fees.</div>
+          <div class="spec-certs">
+            <div class="cert-tag">OSCP</div>
+            <div class="cert-tag">CEH</div>
+            <div class="cert-tag">GPEN</div>
+            <div class="cert-tag">CRTO</div>
+          </div>
+          <div class="spec-salary">$120,000 — $175,000</div>
+        </div>
+      </div>
+      <div class="spec-card fu">
+        <div class="spec-icon">📋</div>
+        <div>
+          <div class="spec-title">GRC &amp; Compliance</div>
+          <div class="spec-desc">Governance, risk and compliance professionals. Surging demand driven by SEC breach reporting mandates, CMMC requirements and evolving federal regulations.</div>
+          <div class="spec-certs">
+            <div class="cert-tag">CISM</div>
+            <div class="cert-tag">CRISC</div>
+            <div class="cert-tag">CISA</div>
+            <div class="cert-tag">CMMC</div>
+          </div>
+          <div class="spec-salary">$95,000 — $145,000</div>
+        </div>
+      </div>
+      <div class="spec-card fu">
+        <div class="spec-icon">☁️</div>
+        <div>
+          <div class="spec-title">Cloud Security &amp; DevSecOps</div>
+          <div class="spec-desc">AWS, Azure and GCP security specialists, and DevSecOps engineers who embed security into the development pipeline. Fastest-growing category in the market.</div>
+          <div class="spec-certs">
+            <div class="cert-tag">AWS-SAP</div>
+            <div class="cert-tag">CCSP</div>
+            <div class="cert-tag">CKS</div>
+          </div>
+          <div class="spec-salary">$150,000 — $210,000</div>
+        </div>
+      </div>
+      <div class="spec-card fu">
+        <div class="spec-icon">🔐</div>
+        <div>
+          <div class="spec-title">Cleared Professionals — Federal</div>
+          <div class="spec-desc">Active security clearance holders — Secret, Top Secret and TS/SCI — for federal contractors and government agencies throughout the Northern Virginia corridor.</div>
+          <div class="spec-certs">
+            <div class="cert-tag">Secret</div>
+            <div class="cert-tag">Top Secret</div>
+            <div class="cert-tag">TS/SCI</div>
+          </div>
+          <div class="spec-salary">$130,000 — $220,000+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="process-section section" id="process">
+  <div class="wrap">
+    <div class="eyebrow">How We Work</div>
+    <h2 class="st">Fast. Rigorous. <em>No Wasted Time.</em></h2>
+    <p class="intro">A boutique process means every search gets our full attention — not a junior consultant and a database search. This is how we deliver a qualified shortlist in 48 hours.</p>
+    <div class="process-track">
+      <div class="pstep fu">
+        <div class="pdot">01</div>
+        <h4>Discovery Call</h4>
+        <p>We learn the role, the team, the culture and what's made previous hires succeed or fail. This takes 30 minutes and changes everything.</p>
+        <div class="ptag">Day 1</div>
+      </div>
+      <div class="pstep fu">
+        <div class="pdot">02</div>
+        <h4>Targeted Search</h4>
+        <p>Active search across our candidate network and direct outreach to passive candidates. We don't post and wait — we go and find.</p>
+        <div class="ptag">Day 1–2</div>
+      </div>
+      <div class="pstep fu">
+        <div class="pdot">03</div>
+        <h4>Rigorous Screen</h4>
+        <p>Technical qualification, cultural fit, clearance status and genuine interest confirmed before anything reaches you. No noise.</p>
+        <div class="ptag">Day 2–3</div>
+      </div>
+      <div class="pstep fu">
+        <div class="pdot">04</div>
+        <h4>Shortlist &amp; Placement</h4>
+        <p>Typically 3–5 qualified, interested candidates. We manage the process, the offer, and the onboarding through to day one.</p>
+        <div class="ptag">Day 3–5</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENTS -->
+<div class="clients-section">
+  <div class="clients-label">Organisations We Place Into</div>
+  <div class="clients-row">
+    <div class="client-box">Booz Allen</div>
+    <div class="client-box">Leidos</div>
+    <div class="client-box">SAIC</div>
+    <div class="client-box">Raytheon</div>
+    <div class="client-box">ManTech</div>
+    <div class="client-box">CACI</div>
+  </div>
+</div>
+
+<!-- WHY UK PARTNER -->
+<div style="background:var(--navy-card);padding:80px 60px;border-top:1px solid var(--border-soft);">
+  <div class="wrap">
+    <div class="eyebrow">Our Position</div>
+    <h2 class="st">UK-Based. <em>US-Focused.</em> Why That Works.</h2>
+    <p class="intro">We don't pretend to be something we're not. CyberTalentHire is based in the UK — and that's a genuine advantage, not a limitation.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);">
+      <div style="background:var(--navy);padding:36px 32px;" class="fu">
+        <div style="font-size:1.8rem;margin-bottom:16px;">🕐</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:white;margin-bottom:8px;">Time Zone Advantage</div>
+        <div style="font-size:0.83rem;color:var(--mid);line-height:1.7;">Our working day starts 5 hours before the US East Coast. Candidate outreach, screening and shortlist preparation happens before your hiring managers have had their morning coffee. You get faster results.</div>
+      </div>
+      <div style="background:var(--navy);padding:36px 32px;" class="fu">
+        <div style="font-size:1.8rem;margin-bottom:16px;">🎯</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:white;margin-bottom:8px;">Niche Specialist Focus</div>
+        <div style="font-size:0.83rem;color:var(--mid);line-height:1.7;">We don't try to be everything to everyone. Cybersecurity recruitment in the US federal corridor is all we do. That focus means deeper candidate networks, faster sourcing and better cultural fit — regardless of where we sit geographically.</div>
+      </div>
+      <div style="background:var(--navy);padding:36px 32px;" class="fu">
+        <div style="font-size:1.8rem;margin-bottom:16px;">📞</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:white;margin-bottom:8px;">Local Number. Global Reach.</div>
+        <div style="font-size:0.83rem;color:var(--mid);line-height:1.7;">We operate a dedicated 703 Northern Virginia number for all US client and candidate communication. Call us, text us, or reach us via email — you'll always get a response within the same business day.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="eyebrow">Get in Touch</div>
+      <h3>Ready to Find Your <em>Next Hire?</em></h3>
+      <p>Whether you need to fill one critical role or build an entire security team — tell us what you need. We'll come back to you within 24 hours with a clear plan.</p>
+      <ul class="contact-points">
+        <li class="cp">
+          <div class="cp-icon">📞</div>
+          <div>
+            <div class="cp-title">US Line — Northern Virginia</div>
+            <div class="cp-desc"><a href="tel:+17031234567" style="color:var(--teal);text-decoration:none;">+1 (703) 123-4567</a> — 703 is Northern Virginia. Call or text during US business hours EST.</div>
+          </div>
+        </li>
+        <li class="cp">
+          <div class="cp-icon">📍</div>
+          <div>
+            <div class="cp-title">UK Based — US Focused</div>
+            <div class="cp-desc">We operate from the UK with a dedicated focus on the Northern Virginia and DC federal corridor. Being UK-based means we work across time zones — your search continues while your team sleeps.</div>
+          </div>
+        </li>
+        <li class="cp">
+          <div class="cp-icon">⏱</div>
+          <div>
+            <div class="cp-title">Response Time</div>
+            <div class="cp-desc">All enquiries responded to within 24 hours. Urgent requirements same day.</div>
+          </div>
+        </li>
+      </ul>
+      <div class="clearance-box">
+        <h4>Cleared Candidates</h4>
+        <p>We maintain an active network of cleared professionals — Secret, Top Secret and TS/SCI — available for immediate placement into federal contractor roles throughout the Northern Virginia corridor.</p>
+      </div>
+    </div>
+    <div>
+      <!-- Formspree form — go to formspree.io, create free account, new form, paste your form ID below -->
+      <form class="contact-form" action="https://formspree.io/f/xpqyzqay" method="POST" id="contactForm">
+        <input type="hidden" name="_replyto" value="info@cybertalenthire.com">
+        <input type="hidden" name="_subject" value="New CyberTalentHire Enquiry">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name *</label>
+            <input type="text" name="first_name" class="form-input" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name *</label>
+            <input type="text" name="last_name" class="form-input" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company / Organisation</label>
+          <input type="text" name="company" class="form-input" placeholder="Organisation name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" name="email" class="form-input" placeholder="john@organisation.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone (optional)</label>
+          <input type="tel" name="phone" class="form-input" placeholder="+1 (703) 000-0000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">I am a... *</label>
+          <select name="enquiry_type" class="form-select" required>
+            <option value="">— Please select —</option>
+            <option>Hiring Manager — looking to recruit</option>
+            <option>Candidate — looking for a role</option>
+            <option>Other enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell us what you need</label>
+          <textarea name="message" class="form-textarea" placeholder="Role title, location, timeline, clearance level — or your background if you are a candidate..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Enquiry →</button>
+        <div id="formSuccess" style="display:none;background:rgba(0,229,200,0.08);border:1px solid rgba(0,229,200,0.2);padding:20px 24px;margin-top:8px;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--teal);font-size:1rem;margin-bottom:6px;">✓ Enquiry Received</div>
+          <div style="font-size:0.83rem;color:var(--mid);line-height:1.6;">Thank you — we will come back to you within 24 hours. For urgent requirements call us directly on <a href="tel:+17031234567" style="color:var(--teal);">(703) 123-4567</a>.</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">
+      <div class="logo-icon" style="width:28px;height:28px;"><svg width="28" height="28" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldGrad2" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00E5C8"/>
+      <stop offset="100%" stop-color="#00B8A0"/>
+    </linearGradient>
+  </defs>
+  <path d="M19 2L4 8V20C4 28.5 10.5 34.5 19 37C27.5 34.5 34 28.5 34 20V8L19 2Z" fill="url(#shieldGrad2)" opacity="0.15"/>
+  <path d="M19 2L4 8V20C4 28.5 10.5 34.5 19 37C27.5 34.5 34 28.5 34 20V8L19 2Z" stroke="url(#shieldGrad2)" stroke-width="1.5" fill="none"/>
+  <path d="M19 7L9 11.5V19.5C9 25 13.5 29.5 19 31.5C24.5 29.5 29 25 29 19.5V11.5L19 7Z" fill="url(#shieldGrad2)" opacity="0.12"/>
+  <rect x="14" y="19" width="10" height="8" rx="1" fill="url(#shieldGrad2)" opacity="0.9"/>
+  <path d="M16 19V16.5C16 14.6 17.1 13 19 13C20.9 13 22 14.6 22 16.5V19" stroke="#00E5C8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <circle cx="19" cy="23" r="1.5" fill="#0A1628"/>
+</svg></div>
+      <div class="footer-logo-text">Cyber<span>Talent</span>Hire</div>
+    </a>
+    <div class="footer-copy">© CyberTalentHire 2025. Elite Cybersecurity Recruitment. UK-based, US-focused.</div>
+    <ul class="footer-links">
+      <li><a href="#specialisms">Specialisms</a></li>
+      <li><a href="#process">Our Process</a></li>
+      <li><a href="#contact">Hire Talent</a></li>
+      <li><a href="#contact">Find a Role</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+const fo = new IntersectionObserver(ee=>{ee.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.07});
+document.querySelectorAll('.fu').forEach(el=>fo.observe(el));
+
+// Formspree AJAX submission
+const form = document.getElementById('contactForm');
+if(form){
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const btn = form.querySelector('button[type=submit]');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method:'POST',
+        body: new FormData(form),
+        headers:{'Accept':'application/json'}
+      });
+      if(res.ok){
+        form.reset();
+        document.getElementById('formSuccess').style.display = 'block';
+        btn.style.display = 'none';
+      } else {
+        btn.textContent = 'Error — please try again';
+        btn.disabled = false;
+      }
+    } catch(err){
+      btn.textContent = 'Error — please try again';
+      btn.disabled = false;
+    }
+  });
+}
+</script>
+</body>
+</html>
